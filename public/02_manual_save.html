@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+	<title>Loading and saving data ( manual save )</title>
+	<meta  name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
+
+	<script src="//cdn.webix.com/site/webix.js" type="text/javascript"></script>
+	<script src="//cdn.webix.com/site/spreadsheet/spreadsheet.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="//cdn.webix.com/site/webix.css">
+	<link rel="stylesheet" type="text/css" href="//cdn.webix.com/site/spreadsheet/spreadsheet.css">
+</head>
+<body>
+	<script type="text/javascript">
+		webix.ready(function(){
+			var url = "/sheets/";
+			var active = "1";
+
+			function load(sheet){
+				$$("ssheet").reset();
+				active = sheet;
+				$$("ssheet").load(url+active);
+			}
+
+			webix.ui({ type:"wide", rows:[
+				{ view:"toolbar", elements:[
+					{ view:"button", value:"Save", click:function(){
+						var data = {data:$$("ssheet").serialize({sheets:true})};
+						webix.ajax().headers({ "Content-type" : "application/json" }).post(url+active, data);
+					}},
+					{ view:"button", value:"Load data set 1", click:function(){load("1")}},
+					{ view:"button", value:"Load data set 2", click:function(){load("2")}},
+					{}
+				]},
+				{
+					view:"spreadsheet",
+					toolbar:"full",
+					id:"ssheet",
+					url: url+active
+				}
+			]});
+		});
+	</script>
+</body>
+</html>

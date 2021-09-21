@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+	<title>Loading and saving data ( auto mode )</title>
+	<meta  name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
+
+	<script src="//cdn.webix.com/site/webix.js" type="text/javascript"></script>
+	<script src="//cdn.webix.com/site/spreadsheet/spreadsheet.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="//cdn.webix.com/site/webix.css">
+	<link rel="stylesheet" type="text/css" href="//cdn.webix.com/site/spreadsheet/spreadsheet.css">
+</head>
+<body>
+	<script type="text/javascript">
+		webix.ready(function(){
+			webix.ui({
+				view:"spreadsheet",
+				toolbar:"full",
+				url: "/sheets/1",
+				save: {
+					all:"/sheets/1"
+				}
+			});
+		});
+	</script>
+</body>
+</html>

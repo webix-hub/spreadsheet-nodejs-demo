@@ -1,22 +1,21 @@
-var express = require('express');
-var parser = require('body-parser');
-var mongo = require('./db.js');
+var express = require("express");
+var bodyParser = require("body-parser");
 
-mongo.ready.then(function(){
+var app = express();
 
-	var app = express();
+// parsing application/json
+app.use(bodyParser.json()); 
+// parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })); 
 
-	app.use(parser.urlencoded({ extended: false }));
-	app.use(express.static(__dirname + '/public'));
+require("./routes")(app);
 
-	app.get( '/sheet/:id/:action', require("./spreadsheet"));
-	app.post('/sheet/:id/:action', require("./spreadsheet"));
-	
-	var server = app.listen(3000, function () {
-		var host = server.address().address;
-		var port = server.address().port;
+// load other assets
+app.use(express.static("./"));
 
-		console.log('App listening at http://%s:%s', host, port);
-	});
-
+const port = "3000";
+const host = "localhost";
+var server = app.listen(port, host, function () {
+    console.log("Server is running on port " + port + "...");
+    console.log(`Open http://${host}:${port}/public in browser`)
 });
